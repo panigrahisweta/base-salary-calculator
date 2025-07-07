@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Base Salary Calculator</title>
+  <title>Salary & Bonus Calculator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,7 +48,7 @@
       cursor: pointer;
     }
     .result {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       font-weight: bold;
       text-align: center;
     }
@@ -57,33 +57,40 @@
 <body>
 
   <div class="calculator">
-    <h2>Base Salary Calculator</h2>
+    <h2>Salary & Bonus Calculator</h2>
     <label for="ctc">Final CTC (₹):</label>
     <input type="number" id="ctc" placeholder="e.g. 1200000" />
 
     <label for="bonus">Bonus % on Base Salary:</label>
     <input type="number" id="bonus" placeholder="e.g. 20" />
 
-    <button onclick="calculateBaseSalary()">Calculate Base Salary</button>
+    <button onclick="calculateSalary()">Calculate</button>
 
     <div class="result" id="result"></div>
   </div>
 
   <script>
-    function calculateBaseSalary() {
+    function calculateSalary() {
       const ctc = parseFloat(document.getElementById("ctc").value);
       const bonusPercent = parseFloat(document.getElementById("bonus").value);
 
+      const resultDiv = document.getElementById("result");
+
       if (isNaN(ctc) || isNaN(bonusPercent) || bonusPercent >= 100 || bonusPercent < 0) {
-        document.getElementById("result").innerText = "Please enter valid values.";
+        resultDiv.innerText = "Please enter valid values.";
         return;
       }
 
       const baseSalary = ctc / (1 + (bonusPercent / 100));
-      document.getElementById("result").innerText =
-        `Estimated Base Salary: ₹${baseSalary.toFixed(2)}`;
+      const bonusAmount = baseSalary * (bonusPercent / 100);
+
+      resultDiv.innerHTML = `
+        Base Salary: ₹${baseSalary.toFixed(2)}<br />
+        Bonus Amount: ₹${bonusAmount.toFixed(2)}
+      `;
     }
   </script>
 
 </body>
 </html>
+
